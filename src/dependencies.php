@@ -1,6 +1,7 @@
 <?php
 // DIC configuration
 
+
 $container = $app->getContainer();
 
 // view renderer
@@ -16,4 +17,12 @@ $container['logger'] = function ($c) {
     $logger->pushProcessor(new Monolog\Processor\UidProcessor());
     $logger->pushHandler(new Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
     return $logger;
+};
+
+$container['telegram'] = function ($c) {
+    $settings = $c->get('settings')['telegram'];
+    $telegram = new \Telegram\Bot\Api($settings['access_token'], true);
+    $telegram->addCommand(\App\Commands\StartCommand::class);
+
+    return $telegram;
 };
