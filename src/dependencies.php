@@ -27,3 +27,13 @@ $container['telegram'] = function ($c) {
 
     return $telegram;
 };
+
+$container['capsule'] = function ($c) {
+    $capsule = new \Illuminate\Database\Capsule\Manager;
+    $capsule->addConnection($c['settings']['db']);
+
+    $capsule->setAsGlobal();
+    $capsule->bootEloquent();
+
+    return $capsule;
+};
