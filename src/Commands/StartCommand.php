@@ -29,7 +29,7 @@ class StartCommand extends Command
      */
     public function handle($arguments)
     {
-        $this->replyWithMessage("Hello! I'm GPG Bot.");
+        $this->replyWithMessage(['text' => 'Hello world!']);
     }
 
 }
