@@ -21,7 +21,7 @@ $container['logger'] = function ($c) {
 
 $container['telegram'] = function ($c) {
     $settings = $c->get('settings')['telegram'];
-    $telegram = new \Telegram\Bot\Api($settings['access_token'], true);
+    $telegram = new \Telegram\Bot\Api($settings['access_token']);
     return $telegram;
 };
 
