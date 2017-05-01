@@ -10,9 +10,7 @@ $app->post('/getUpdates', function ($request, $response, $args) {
     /** @var \Telegram\Bot\Api $telegram */
     $telegram = $this->telegram;
     $response = $telegram->getWebhookUpdates();
-
-    $gpg = new \gnupg();
-
+    
     $response->each(function ($message) use ($gpg, $telegram) {
         $model = new \App\Model\PublicKey();
         $model->user_id = $message['message']['from']['id'];
