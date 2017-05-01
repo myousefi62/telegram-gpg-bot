@@ -22,8 +22,8 @@ $container['logger'] = function ($c) {
 $container['telegram'] = function ($c) {
     $settings = $c->get('settings')['telegram'];
     $telegram = new \Telegram\Bot\Api($settings['access_token'], true);
-    $telegram->addCommand(\App\Commands\StartCommand::class);
     $telegram->commandsHandler(true);
+    $telegram->addCommand(\App\Commands\StartCommand::class);
 
     return $telegram;
 };
