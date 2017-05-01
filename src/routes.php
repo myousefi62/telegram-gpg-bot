@@ -9,14 +9,16 @@ $app->post('/hook', function ($request, $response, $args) {
 $app->post('/getUpdates', function ($request, $response, $args) {
     /** @var \Telegram\Bot\Api $telegram */
     $telegram = $this->telegram;
-    $response = $telegram->getWebhookUpdates();
+    $responses = $telegram->getUpdates();
 
-    $response->each(function ($message) use ($telegram) {
+    /** @var \Telegram\Bot\Objects\Update $response */
+    foreach ($responses as $response) {
         $model = new \App\Model\PublicKey();
-        $model->user_id = $message['message']['from']['id'];
-        $model->public_key = $message['message']['text'];
+        $model->user_id = $response->getMessage()->getFrom()->getId();
+        $model->public_key = $response->getMessage()->getText();
         $model->save();
         $telegram->sendMessage(['text' => 'Success']);
-    });
+    }
+
 
 });
