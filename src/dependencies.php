@@ -32,5 +32,10 @@ $container['capsule'] = function ($c) {
     $capsule->setAsGlobal();
     $capsule->bootEloquent();
 
+    $resolver = new \Illuminate\Database\ConnectionResolver();
+    $resolver->addConnection('default', $capsule->getConnection('default'));
+    $resolver->setDefaultConnection('default');
+    \Illuminate\Database\Eloquent\Model::setConnectionResolver($resolver);
+    
     return $capsule;
 };
