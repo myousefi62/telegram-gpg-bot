@@ -28,14 +28,12 @@ $container['telegram'] = function ($c) {
 $container['capsule'] = function ($c) {
     $capsule = new \Illuminate\Database\Capsule\Manager;
     $capsule->addConnection($c['settings']['db']);
-
-    $capsule->setAsGlobal();
     $capsule->bootEloquent();
 
     $resolver = new \Illuminate\Database\ConnectionResolver();
     $resolver->addConnection('default', $capsule->getConnection('default'));
     $resolver->setDefaultConnection('default');
     \Illuminate\Database\Eloquent\Model::setConnectionResolver($resolver);
-    
+
     return $capsule;
 };
