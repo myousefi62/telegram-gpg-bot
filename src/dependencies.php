@@ -34,6 +34,5 @@ $container['capsule'] = function ($c) {
     $resolver->addConnection('default', $capsule->getConnection('default'));
     $resolver->setDefaultConnection('default');
     \Illuminate\Database\Eloquent\Model::setConnectionResolver($resolver);
-
     return $capsule;
 };
