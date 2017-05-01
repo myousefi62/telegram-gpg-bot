@@ -14,18 +14,11 @@ $app->post('/getUpdates', function ($request, $response, $args) {
     $gpg = new \gnupg();
 
     $response->each(function ($message) use ($gpg, $telegram) {
-
-        if ($gpg->addencryptkey($message['message']['text'])) {
-            $model = new \App\Model\PublicKey();
-            $model->user_id = $message['message']['from']['id'];
-            $model->public_key = $message['message']['text'];
-            $model->save();
-            $telegram->sendMessage(['text' => 'Success']);
-
-        } else {
-            $telegram->sendMessage(['text' => 'Error']);
-        }
-
+        $model = new \App\Model\PublicKey();
+        $model->user_id = $message['message']['from']['id'];
+        $model->public_key = $message['message']['text'];
+        $model->save();
+        $telegram->sendMessage(['text' => 'Success']);
     });
 
 });
