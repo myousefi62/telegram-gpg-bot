@@ -19,9 +19,7 @@ $app->post('/hook', function ($request, $response, $args) {
     } else {
         $publicKeyModel->save();
     }
-
-    $publicKeyModel->save();
-
+    
     $telegram->sendMessage(['text' => 'Success', 'chat_id' => $update->getMessage()->getChat()->getId()]);
 
 });
