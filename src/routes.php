@@ -7,7 +7,8 @@ $app->post('/hook', function ($request, $response, $args) {
     $telegram = $this->telegram;
 
     $update = $telegram->getWebhookUpdates();
-    if ($update->count() > 1) {
+
+    if ($update->count() >= 1) {
         \App\Model\PublicKey::updateOrCreate([
             'user_id' => $update->getMessage()->getFrom()->getId()
         ], [
