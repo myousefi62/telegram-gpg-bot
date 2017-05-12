@@ -6,17 +6,21 @@ $app->post('/hook', function ($request, $response, $args) {
     /** @var \Telegram\Bot\Api $telegram */
     $telegram = $this->telegram;
 
-    $update = $telegram->getWebhookUpdates();
+    $updates = $telegram->getUpdates();
 
-    if ($update->count() >= 1) {
-        \App\Model\PublicKey::updateOrCreate([
-            'user_id' => $update->getMessage()->getFrom()->getId()
-        ], [
-            'public_key' => $update->getMessage()->getText()
-        ]);
+    if (count($updates) >= 1) {
+        /** @var \Telegram\Bot\Objects\Update $update */
+        foreach ($updates as $update) {
+            \App\Model\PublicKey::updateOrCreate([
+                'user_id' => $update->getMessage()->getFrom()->getId()
+            ], [
+                'public_key' => $update->getMessage()->getText()
+            ]);
 
-        $telegram->sendMessage(['text' => 'Success', 'chat_id' => $update->getMessage()->getChat()->getId()]);
+            $telegram->sendMessage(['text' => 'Success', 'chat_id' => $update->getMessage()->getChat()->getId()]);
+        }
     }
+
 
 
 });
