@@ -16,4 +16,9 @@ class PublicKey extends Model
      * @var string
      */
     protected $table = 'public_keys';
+
+    /**
+     * @var array
+     */
+    public $fillable = ['user_id', 'public_key'];
 }
